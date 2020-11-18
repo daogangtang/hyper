@@ -1,7 +1,8 @@
 use std::error::Error as StdError;
 
 use pin_project::pin_project;
-use tokio::io::{AsyncRead, AsyncWrite};
+//use tokio::io::{AsyncRead, AsyncWrite};
+use futures::io::{AsyncRead, AsyncWrite};
 
 use super::conn::{SpawnAll, UpgradeableConnection, Watcher};
 use super::Accept;

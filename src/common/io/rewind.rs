@@ -2,7 +2,8 @@ use std::marker::Unpin;
 use std::{cmp, io};
 
 use bytes::{Buf, Bytes};
-use tokio::io::{AsyncRead, AsyncWrite, ReadBuf};
+use futures::io::{AsyncRead, AsyncWrite, Error};
+//use tokio::io::{AsyncRead, AsyncWrite, ReadBuf};
 
 use crate::common::{task, Pin, Poll};
 
@@ -51,11 +52,14 @@ where
     fn poll_read(
         mut self: Pin<&mut Self>,
         cx: &mut task::Context<'_>,
-        buf: &mut ReadBuf<'_>,
-    ) -> Poll<io::Result<()>> {
+        buf: &mut [u8],
+    ) -> Poll<Result<usize, Error>> {
+    //    buf: &mut ReadBuf<'_>,
+    //) -> Poll<io::Result<()>> {
         if let Some(mut prefix) = self.pre.take() {
             // If there are no remaining bytes, let the bytes get dropped.
             if !prefix.is_empty() {
+                // TODO:superpoll: rewrite this
                 let copy_len = cmp::min(prefix.len(), buf.remaining());
                 // TODO: There should be a way to do following two lines cleaner...
                 buf.put_slice(&prefix[..copy_len]);
@@ -80,15 +84,16 @@ where
         mut self: Pin<&mut Self>,
         cx: &mut task::Context<'_>,
         buf: &[u8],
-    ) -> Poll<io::Result<usize>> {
+    ) -> Poll<Result<usize, Error>> {
+    //) -> Poll<io::Result<usize>> {
         Pin::new(&mut self.inner).poll_write(cx, buf)
     }
 
-    fn poll_flush(mut self: Pin<&mut Self>, cx: &mut task::Context<'_>) -> Poll<io::Result<()>> {
+    fn poll_flush(mut self: Pin<&mut Self>, cx: &mut task::Context<'_>) -> Poll<Result<(), Error>> {
         Pin::new(&mut self.inner).poll_flush(cx)
     }
 
-    fn poll_shutdown(mut self: Pin<&mut Self>, cx: &mut task::Context<'_>) -> Poll<io::Result<()>> {
+    fn poll_shutdown(mut self: Pin<&mut Self>, cx: &mut task::Context<'_>) -> Poll<Result<(), Error>> {
         Pin::new(&mut self.inner).poll_shutdown(cx)
     }
 }

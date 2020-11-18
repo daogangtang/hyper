@@ -264,7 +264,8 @@ pub(super) mod sealed {
     use std::error::Error as StdError;
 
     use ::http::Uri;
-    use tokio::io::{AsyncRead, AsyncWrite};
+    //use tokio::io::{AsyncRead, AsyncWrite};
+    use futures::io::{AsyncRead, AsyncWrite};
 
     use super::Connection;
     use crate::common::{Future, Unpin};

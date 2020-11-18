@@ -66,7 +66,8 @@ use std::net::{SocketAddr, TcpListener as StdTcpListener};
 use std::time::Duration;
 
 use pin_project::pin_project;
-use tokio::io::{AsyncRead, AsyncWrite};
+//use tokio::io::{AsyncRead, AsyncWrite};
+use futures::io::{AsyncRead, AsyncWrite};
 
 use self::accept::Accept;
 use crate::body::{Body, HttpBody};

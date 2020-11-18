@@ -1,8 +1,10 @@
 #[cfg(feature = "http2")]
 use std::future::Future;
 
-use tokio::stream::Stream;
-use tokio::sync::{mpsc, oneshot};
+//use tokio::stream::Stream;
+//use tokio::sync::{mpsc, oneshot};
+use futures::stream::Stream;
+use futures::channel::{mpsc, oneshot};
 
 use crate::common::{task, Pin, Poll};
 
@@ -10,7 +12,8 @@ pub type RetryPromise<T, U> = oneshot::Receiver<Result<U, (crate::Error, Option<
 pub type Promise<T> = oneshot::Receiver<Result<T, crate::Error>>;
 
 pub fn channel<T, U>() -> (Sender<T, U>, Receiver<T, U>) {
-    let (tx, rx) = mpsc::unbounded_channel();
+    //let (tx, rx) = mpsc::unbounded_channel();
+    let (tx, rx) = mpsc::unbounded();
     let (giver, taker) = want::new();
     let tx = Sender {
         buffered_once: false,

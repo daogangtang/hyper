@@ -1,7 +1,8 @@
 use std::error::Error as StdError;
 use std::fmt;
 
-use tokio::io::{AsyncRead, AsyncWrite};
+//use tokio::io::{AsyncRead, AsyncWrite};
+use futures::io::{AsyncRead, AsyncWrite};
 
 use super::{HttpService, Service};
 use crate::body::HttpBody;

@@ -2,7 +2,8 @@ use std::error::Error as StdError;
 
 use bytes::{Buf, Bytes};
 use http::{Request, Response, StatusCode};
-use tokio::io::{AsyncRead, AsyncWrite};
+//use tokio::io::{AsyncRead, AsyncWrite};
+use futures::io::{AsyncRead, AsyncWrite};
 
 use super::{Http1Transaction, Wants};
 use crate::body::{Body, HttpBody};

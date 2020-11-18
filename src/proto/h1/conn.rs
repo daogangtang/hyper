@@ -5,7 +5,8 @@ use std::marker::PhantomData;
 use bytes::{Buf, Bytes};
 use http::header::{HeaderValue, CONNECTION};
 use http::{HeaderMap, Method, Version};
-use tokio::io::{AsyncRead, AsyncWrite};
+//use tokio::io::{AsyncRead, AsyncWrite};
+use futures::io::{AsyncRead, AsyncWrite};
 
 use super::io::Buffered;
 use super::{Decoder, Encode, EncodedBuf, Encoder, Http1Transaction, ParseContext, Wants};

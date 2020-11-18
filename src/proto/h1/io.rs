@@ -4,7 +4,8 @@ use std::fmt;
 use std::io::{self, IoSlice};
 
 use bytes::{Buf, BufMut, Bytes, BytesMut};
-use tokio::io::{AsyncRead, AsyncWrite, ReadBuf};
+//use tokio::io::{AsyncRead, AsyncWrite, ReadBuf};
+use futures::io::{AsyncRead, AsyncWrite};
 
 use super::{Http1Transaction, ParseContext, ParsedMessage};
 use crate::common::buf::BufList;
@@ -188,6 +189,7 @@ where
         if self.read_buf_remaining_mut() < next {
             self.read_buf.reserve(next);
         }
+        // TODO:superpoll: rewrite this
         let mut buf = ReadBuf::uninit(&mut self.read_buf.bytes_mut()[..]);
         match Pin::new(&mut self.io).poll_read(cx, &mut buf) {
             Poll::Ready(Ok(_)) => {

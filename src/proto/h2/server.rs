@@ -6,7 +6,8 @@ use std::time::Duration;
 use h2::server::{Connection, Handshake, SendResponse};
 use h2::Reason;
 use pin_project::pin_project;
-use tokio::io::{AsyncRead, AsyncWrite};
+//use tokio::io::{AsyncRead, AsyncWrite};
+use futures::io::{AsyncRead, AsyncWrite};
 
 use super::{decode_content_length, ping, PipeToSendStream, SendBuf};
 use crate::body::HttpBody;

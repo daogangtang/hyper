@@ -19,7 +19,8 @@ use std::time::Duration;
 use bytes::Bytes;
 use futures_util::future::{self, Either, FutureExt as _};
 use pin_project::pin_project;
-use tokio::io::{AsyncRead, AsyncWrite};
+//use tokio::io::{AsyncRead, AsyncWrite};
+use futures::io::{AsyncRead, AsyncWrite};
 use tower_service::Service;
 
 use super::dispatch;
